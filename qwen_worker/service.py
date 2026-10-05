@@ -30,6 +30,7 @@ class ImageService:
             "true_cfg_scale": request.true_cfg_scale,
             "output_resolution": request.output_resolution,
             "use_kv_cache": request.use_kv_cache,
+            "turbo": request.turbo,
         }
         if references:
             kwargs["image"] = references
@@ -44,6 +45,7 @@ class ImageService:
                 "true_cfg_scale": request.true_cfg_scale,
                 "output_resolution": request.output_resolution,
                 "use_kv_cache": request.use_kv_cache,
+                "turbo": request.turbo,
             },
             "images": [],
         }

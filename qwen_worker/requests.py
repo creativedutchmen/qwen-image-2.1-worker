@@ -45,6 +45,7 @@ class GenerationRequest:
     negative_prompt: str | None
     output_resolution: int
     use_kv_cache: bool
+    turbo: bool
 
     @classmethod
     def parse(cls, data: Any) -> "GenerationRequest":
@@ -66,6 +67,7 @@ class GenerationRequest:
             "negative_prompt",
             "output_resolution",
             "use_kv_cache",
+            "turbo",
         }
         unknown = set(data) - allowed
         if unknown:
@@ -120,6 +122,9 @@ class GenerationRequest:
         use_kv_cache = data.get("use_kv_cache", True)
         if type(use_kv_cache) is not bool:
             raise InputError("use_kv_cache must be a boolean")
+        turbo = data.get("turbo", False)
+        if type(turbo) is not bool:
+            raise InputError("turbo must be a boolean")
         seed = integer(data, "seed", -1, -1, MAX_SEED)
         if seed == -1:
             seed = secrets.randbelow(MAX_SEED + 1)
@@ -138,6 +143,7 @@ class GenerationRequest:
             negative_prompt=negative,
             output_resolution=resolution,
             use_kv_cache=use_kv_cache,
+            turbo=turbo,
         )
 
     @property
